@@ -19,12 +19,11 @@ dependencies {
     implementation(kotlin("reflect"))
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.0")
     implementation("com.github.victools:jsonschema-module-jackson:4.0.0")
-    implementation("com.github.victools:jsonschema-generator:4.0.2")
+    implementation("com.github.victools:jsonschema-generator:4.3.0")
     runtime("org.slf4j:slf4j-simple:1.6.2")
 
     testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.21")
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
-    testImplementation("io.strikt:strikt-core:0.24.0")
 }
 
 tasks {
