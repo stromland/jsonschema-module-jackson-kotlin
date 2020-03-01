@@ -1,0 +1,53 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "definitions" : {
+    "ComplexConfig" : {
+      "type" : "object",
+      "properties" : {
+        "enabled" : {
+          "type" : "boolean",
+          "default" : true
+        },
+        "properties" : {
+          "allOf" : [ {
+            "$ref" : "#/definitions/Map(String,String)"
+          }, {
+            "default" : { }
+          } ]
+        },
+        "type" : {
+          "$ref" : "#/definitions/ConfigType"
+        }
+      },
+      "required" : [ "type" ]
+    },
+    "ConfigType" : {
+      "type" : "string",
+      "enum" : [ "DEVELOPMENT", "PRODUCTION" ]
+    },
+    "Map(String,String)" : {
+      "type" : "object"
+    }
+  },
+  "type" : "object",
+  "properties" : {
+    "configs" : {
+      "default" : [ {
+        "type" : "DEVELOPMENT",
+        "enabled" : true,
+        "properties" : { }
+      } ],
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/ComplexConfig"
+      }
+    },
+    "name" : {
+      "type" : "string"
+    },
+    "version" : {
+      "type" : [ "string", "null" ]
+    }
+  },
+  "required" : [ "name" ]
+}
