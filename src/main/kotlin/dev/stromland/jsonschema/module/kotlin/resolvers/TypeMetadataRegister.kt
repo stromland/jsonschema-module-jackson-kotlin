@@ -1,24 +1,26 @@
 package dev.stromland.jsonschema.module.kotlin.resolvers
 
 import java.lang.reflect.Type
+import java.time.Instant
 import kotlin.reflect.KParameter
 import kotlin.reflect.KProperty
 import kotlin.reflect.full.primaryConstructor
-import kotlin.reflect.jvm.isAccessible
 import kotlin.reflect.jvm.javaType
 
 /**
- * Cache for creating an instance of a class with required parameters.
- * @property typeToMetadataMap map
+ * Register for creating an instance of a class with required parameters. And a cache for resolved types.
+ * @param typeToMetadataMap additional types.
  */
 data class TypeMetadataRegister(private val typeToMetadataMap: Map<Type, TypeMetadata> = mapOf()) {
     private val defaultTypeValues = mutableMapOf(
         Int::class.java.toTypedPair(0),
+        Integer::class.java.toTypedPair(0),
         Boolean::class.java.toTypedPair(false),
         String::class.java.toTypedPair(""),
         Long::class.java.toTypedPair(0L),
         Map::class.java.toTypedPair(mapOf<Any, Any>()),
-        List::class.java.toTypedPair(listOf<Any>())
+        List::class.java.toTypedPair(listOf<Any>()),
+        Instant::class.java.toTypedPair(Instant.EPOCH)
     )
 
     init {
@@ -34,7 +36,7 @@ data class TypeMetadataRegister(private val typeToMetadataMap: Map<Type, TypeMet
     }
 
     fun getDefaultValue(type: Type, prop: KProperty<*>? = null): Any? {
-        val metadata = defaultTypeValues[type] ?: registerType(type) ?: return null
+        val metadata = resolveType(type) ?: return null
         return metadata.getDefaultValue(prop)
     }
 

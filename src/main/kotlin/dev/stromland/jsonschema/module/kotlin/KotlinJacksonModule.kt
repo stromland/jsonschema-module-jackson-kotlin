@@ -11,6 +11,15 @@ import com.github.victools.jsonschema.module.jackson.JacksonModule
 import dev.stromland.jsonschema.module.kotlin.resolvers.TypeMetadataRegister
 import kotlin.reflect.jvm.kotlinProperty
 
+/**
+ * Module for jsonschema-generator. Takes advantage of Kotlin data classes.
+ * Given a data class this module can add the following information to json schema:
+ *  - Default values.
+ *  - Nullable type.
+ *  - Required properties. Required when a field is not nullable or doesn't have a default value.
+ *
+ * @param typeMetadataRegister register for resolving types.
+ */
 class KotlinJacksonModule(private val typeMetadataRegister: TypeMetadataRegister = TypeMetadataRegister()) :
     JacksonModule() {
     private var mapper = jacksonObjectMapper()

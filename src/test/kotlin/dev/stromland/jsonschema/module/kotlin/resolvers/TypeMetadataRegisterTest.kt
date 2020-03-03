@@ -5,6 +5,7 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isNull
 import org.junit.jupiter.api.Test
 import java.math.BigInteger
+import java.time.Instant
 
 class TypeMetadataRegisterTest {
 
@@ -22,14 +23,20 @@ class TypeMetadataRegisterTest {
 
     @Test
     fun `should get default value for class`() {
-        data class Pet(val type: String, val alive: Boolean = true)
+        data class Pet(val type: String, val alive: Boolean = true, val age: Int?, val born: Instant = Instant.EPOCH)
 
         val register = TypeMetadataRegister()
         val typeDefault = register.getDefaultValue(Pet::class.java, Pet::type)
         val aliveDefault = register.getDefaultValue(Pet::class.java, Pet::alive)
+        val ageDefault = register.getDefaultValue(Pet::class.java, Pet::age)
+        val bornDefault = register.getDefaultValue(Pet::class.java, Pet::born)
+        val petDefault = register.getDefaultValue(Pet::class.java)
 
         assertThat(typeDefault).isNull()
         assertThat(aliveDefault).isEqualTo(true)
+        assertThat(ageDefault).isNull()
+        assertThat(bornDefault).isEqualTo(Instant.EPOCH)
+        assertThat(petDefault).isEqualTo(Pet(type = "", age = 0))
     }
 }
 

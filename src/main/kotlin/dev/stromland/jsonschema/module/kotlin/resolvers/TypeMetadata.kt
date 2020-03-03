@@ -8,15 +8,15 @@ import kotlin.reflect.KProperty
  * Model for storing information about a type.
  * @property type The Java type of the class.
  * @property instance An instance of the class.
- * @property requiredParameters A map of requiredParameters to instantiate an instance of the type.
+ * @property requiredParameters A map of requiredParameters to instantiate an instance of the class.
  */
 data class TypeMetadata(val type: Type, val instance: Any, val requiredParameters: Map<KParameter, Any?> = mapOf()) {
     private val parameterNames: Set<String> = requiredParameters.mapNotNull { it.key.name }.toSet()
 
     /**
      * Get default value for the given type or for a property of the given type.
-     * @param prop something.
-     * @return return null if property is required, else the instant.
+     * @param prop a property of a class.
+     * @return return null if property is required, else the instance.
      */
     fun getDefaultValue(prop: KProperty<*>? = null): Any? {
         if (prop == null) {
