@@ -1,19 +1,19 @@
 {
-  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "$schema" : "https://json-schema.org/draft/2019-09/schema",
   "type" : "object",
   "properties" : {
     "age" : {
       "type" : "integer",
       "default" : 28
     },
+    "gender" : {
+      "type" : [ "string", "null" ]
+    },
     "lastName" : {
       "type" : "string"
     },
     "name" : {
       "type" : "string"
-    },
-    "sex" : {
-      "type" : [ "string", "null" ]
     }
   },
   "required" : [ "lastName", "name" ]

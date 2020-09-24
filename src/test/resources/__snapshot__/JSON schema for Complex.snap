@@ -1,6 +1,6 @@
 {
-  "$schema" : "http://json-schema.org/draft-07/schema#",
-  "definitions" : {
+  "$schema" : "https://json-schema.org/draft/2019-09/schema",
+  "$defs" : {
     "ComplexConfig" : {
       "type" : "object",
       "properties" : {
@@ -9,14 +9,11 @@
           "default" : true
         },
         "properties" : {
-          "allOf" : [ {
-            "$ref" : "#/definitions/Map(String,String)"
-          }, {
-            "default" : { }
-          } ]
+          "$ref" : "#/$defs/Map(String,String)",
+          "default" : { }
         },
         "type" : {
-          "$ref" : "#/definitions/ConfigType"
+          "$ref" : "#/$defs/ConfigType"
         }
       },
       "required" : [ "type" ]
@@ -39,7 +36,12 @@
       } ],
       "type" : "array",
       "items" : {
-        "$ref" : "#/definitions/ComplexConfig"
+        "$ref" : "#/$defs/ComplexConfig",
+        "default" : [ {
+          "type" : "DEVELOPMENT",
+          "enabled" : true,
+          "properties" : { }
+        } ]
       }
     },
     "name" : {

@@ -2,17 +2,14 @@ package dev.stromland.jsonschema.module.kotlin
 
 import assertk.assertThat
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.github.victools.jsonschema.generator.Option
-import com.github.victools.jsonschema.generator.OptionPreset
-import com.github.victools.jsonschema.generator.SchemaGenerator
-import com.github.victools.jsonschema.generator.SchemaGeneratorConfigBuilder
+import com.github.victools.jsonschema.generator.*
 import org.junit.jupiter.api.Test
 
 class KotlinJacksonModuleTest {
     val generator: SchemaGenerator
 
     init {
-        val builder = SchemaGeneratorConfigBuilder(jacksonObjectMapper(), OptionPreset.PLAIN_JSON)
+        val builder = SchemaGeneratorConfigBuilder(jacksonObjectMapper(), SchemaVersion.DRAFT_2019_09, OptionPreset.PLAIN_JSON)
         builder.with(KotlinJacksonModule())
         builder.with(Option.DEFINITIONS_FOR_ALL_OBJECTS)
         generator = SchemaGenerator(builder.build())
@@ -20,7 +17,7 @@ class KotlinJacksonModuleTest {
 
     @Test
     fun `json schema for Person should match snapshot`() {
-        data class Person(val name: String, val lastName: String, val age: Int = 28, val sex: String?)
+        data class Person(val name: String, val lastName: String, val age: Int = 28, val gender: String?)
 
         val jsonSchema = generator.generateSchema(Person::class.java)
 

@@ -22,28 +22,37 @@ Given a [data class](https://kotlinlang.org/docs/reference/data-classes.html#dat
 ### Example
 
 ```kotlin
-data class Person(val name: String, val lastName: String, val age: Int = 28, val sex: String?)
+data class Person(val name: String, val lastName: String, val age: Int = 28, val gender: String?)
+
+val builder = SchemaGeneratorConfigBuilder(jacksonObjectMapper(), SchemaVersion.DRAFT_2019_09, OptionPreset.PLAIN_JSON)
+
+builder.with(KotlinJacksonModule()) // Add this module
+builder.with(Option.DEFINITIONS_FOR_ALL_OBJECTS)
+
+val generator = SchemaGenerator(builder.build())
+
+val jsonSchema = generator.generateSchema(Person::class.java)
 ```
 
 ```json
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "properties": {
-    "age": {
-      "type": "integer",
-      "default": 28
+  "$schema" : "https://json-schema.org/draft/2019-09/schema",
+  "type" : "object",
+  "properties" : {
+    "age" : {
+      "type" : "integer",
+      "default" : 28
     },
-    "lastName": {
-      "type": "string"
+    "gender" : {
+      "type" : [ "string", "null" ]
     },
-    "name": {
-      "type": "string"
+    "lastName" : {
+      "type" : "string"
     },
-    "sex": {
-      "type": ["string", "null"]
+    "name" : {
+      "type" : "string"
     }
   },
-  "required": ["lastName", "name"]
+  "required" : [ "lastName", "name" ]
 }
 ```
