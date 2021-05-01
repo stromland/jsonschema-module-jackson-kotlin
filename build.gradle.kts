@@ -2,8 +2,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `maven-publish`
-    kotlin("jvm") version "1.3.61"
-    id("org.jetbrains.dokka") version "0.10.1"
+    kotlin("jvm") version "1.4.32"
+    id("org.jetbrains.dokka") version "1.4.32"
+    id("com.github.ben-manes.versions") version "0.38.0"
 }
 
 group = "dev.stromland"
@@ -18,13 +19,13 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.2")
-    implementation("com.github.victools:jsonschema-module-jackson:4.15.1")
-    implementation("com.github.victools:jsonschema-generator:4.15.1")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.3")
+    implementation("com.github.victools:jsonschema-module-jackson:4.18.0")
+    implementation("com.github.victools:jsonschema-generator:4.18.0")
     runtimeOnly("org.slf4j:slf4j-simple:1.7.30")
 
-    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.23")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
+    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.23.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
 }
 
 tasks {
@@ -33,11 +34,6 @@ tasks {
         testLogging {
             events("passed", "skipped", "failed")
         }
-    }
-
-    dokka {
-        outputFormat = "html"
-        outputDirectory = "$buildDir/javadoc"
     }
 
     withType<KotlinCompile>().configureEach {
@@ -59,7 +55,7 @@ val dokkaJar by tasks.creating(Jar::class) {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
     description = "Assembles Kotlin docs with Dokka"
     archiveClassifier.set("javadoc")
-    from(tasks.dokka)
+    from(tasks.dokkaJavadoc)
 }
 
 publishing {
@@ -94,7 +90,7 @@ publishing {
     }
     repositories {
         maven {
-            url = uri("/home/espen/.m2/repository")
+            url = uri("${System.getenv("HOME")}/.m2/repository")
         }
     }
 }

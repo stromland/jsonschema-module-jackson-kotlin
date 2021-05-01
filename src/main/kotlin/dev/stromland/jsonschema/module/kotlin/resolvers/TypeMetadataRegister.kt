@@ -28,11 +28,7 @@ data class TypeMetadataRegister(private val typeToMetadataMap: Map<Type, TypeMet
     }
 
     fun resolveType(type: Type): TypeMetadata? {
-        val alreadyResolved = getTypeMetadata(type)
-        if (alreadyResolved != null) {
-            return alreadyResolved
-        }
-        return registerType(type)
+        return getTypeMetadata(type) ?: registerType(type)
     }
 
     fun getDefaultValue(type: Type, prop: KProperty<*>? = null): Any? {
