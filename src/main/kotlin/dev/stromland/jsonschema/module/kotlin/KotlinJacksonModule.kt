@@ -11,6 +11,12 @@ import com.github.victools.jsonschema.module.jackson.JacksonModule
 import dev.stromland.jsonschema.module.kotlin.resolvers.TypeMetadataRegister
 import kotlin.reflect.jvm.kotlinProperty
 
+data class KotlinJacksonModuleConfig(
+    val disableRequired: Boolean = false,
+    val disableDefaultValue: Boolean = false,
+    val disableNullable: Boolean = false
+)
+
 /**
  * Module for jsonschema-generator. Takes advantage of Kotlin data classes.
  * Given a data class this module can add the following information to json schema:
@@ -20,7 +26,10 @@ import kotlin.reflect.jvm.kotlinProperty
  *
  * @param typeMetadataRegister register for resolving types.
  */
-class KotlinJacksonModule(private val typeMetadataRegister: TypeMetadataRegister = TypeMetadataRegister()) :
+class KotlinJacksonModule(
+    val config: KotlinJacksonModuleConfig = KotlinJacksonModuleConfig(),
+    val typeMetadataRegister: TypeMetadataRegister = TypeMetadataRegister()
+) :
     JacksonModule() {
     private var mapper = jacksonObjectMapper()
 
@@ -30,10 +39,11 @@ class KotlinJacksonModule(private val typeMetadataRegister: TypeMetadataRegister
             .registerModule(KotlinModule())
             .enable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES)
 
-        builder.forFields()
-            .withRequiredCheck(this::resolveRequiredCheck)
-            .withDefaultResolver(this::resolveDefault)
-            .withNullableCheck(this::resolveNullable)
+        builder.forFields().also {
+            if (!config.disableRequired) it.withRequiredCheck(this::resolveRequiredCheck)
+            if (!config.disableDefaultValue) it.withDefaultResolver(this::resolveDefault)
+            if (!config.disableNullable) it.withNullableCheck(this::resolveNullable)
+        }
     }
 
     private fun resolveRequiredCheck(field: FieldScope): Boolean {

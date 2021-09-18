@@ -1,5 +1,6 @@
 package dev.stromland.jsonschema.module.kotlin.resolvers
 
+import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 import java.time.Instant
 import kotlin.reflect.KParameter
@@ -38,11 +39,15 @@ data class TypeMetadataRegister(private val typeToMetadataMap: Map<Type, TypeMet
 
     private fun registerType(clazz: Type): TypeMetadata? {
         fun getDefaultRequiredValue(param: KParameter): Any? {
-            val typeMetadata = defaultTypeValues[param.type.javaType]
+            val type = when(val javaType = param.type.javaType) {
+                is ParameterizedType -> javaType.rawType
+                else -> javaType
+            }
+            val typeMetadata = defaultTypeValues[type]
             if (typeMetadata != null) {
                 return typeMetadata.instance
             }
-            return registerType(param.type.javaType)?.instance
+            return registerType(type)?.instance
         }
 
         if (clazz !is Class<*>) {

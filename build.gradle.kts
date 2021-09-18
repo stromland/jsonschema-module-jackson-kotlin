@@ -2,8 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `maven-publish`
-    kotlin("jvm") version "1.4.32"
-    id("org.jetbrains.dokka") version "1.4.32"
+    kotlin("jvm") version "1.5.30"
+    id("org.jetbrains.dokka") version "1.5.30"
     id("com.github.ben-manes.versions") version "0.38.0"
 }
 
@@ -19,13 +19,13 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.3")
-    implementation("com.github.victools:jsonschema-module-jackson:4.18.0")
-    implementation("com.github.victools:jsonschema-generator:4.18.0")
-    runtimeOnly("org.slf4j:slf4j-simple:1.7.30")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.5")
+    implementation("com.github.victools:jsonschema-module-jackson:4.20.0")
+    implementation("com.github.victools:jsonschema-generator:4.20.0")
+    runtimeOnly("org.slf4j:slf4j-simple:1.7.32")
 
-    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.23.1")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
+    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.24")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
 }
 
 tasks {

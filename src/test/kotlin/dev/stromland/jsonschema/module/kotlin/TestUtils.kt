@@ -5,8 +5,8 @@ import assertk.assertions.isEqualTo
 import org.slf4j.LoggerFactory
 import java.io.File
 
-fun Assert<String>.matchSnapshot(snapshotName: String): Unit {
-    val snapshot = Snapshot().getOrCreateSnapshot(snapshotName) {
+fun Assert<String>.matchSnapshot(snapshotName: String, type: String = "json") {
+    val snapshot = Snapshot().getOrCreateSnapshot(snapshotName, type) {
         var value: String? = null
         this.given {
             value = it
@@ -31,8 +31,8 @@ data class Snapshot(val path: String = defaultPath) {
         }
     }
 
-    fun getOrCreateSnapshot(name: String, getContent: () -> String?): String? {
-        val file = File("$path/$name.snap")
+    fun getOrCreateSnapshot(name: String, type: String, getContent: () -> String?): String? {
+        val file = File("$path/$name.$type")
         val created = file.createNewFile()
         return if (created) {
             getContent()?.also {

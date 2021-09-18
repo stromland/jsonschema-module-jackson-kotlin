@@ -1,0 +1,55 @@
+{
+  "$schema" : "https://json-schema.org/draft/2019-09/schema",
+  "type" : "object",
+  "properties" : {
+    "configs" : {
+      "default" : [ {
+        "type" : "DEVELOPMENT",
+        "enabled" : true,
+        "properties" : { },
+        "test" : { }
+      } ],
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "enabled" : {
+            "type" : "boolean",
+            "default" : true
+          },
+          "properties" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "default" : { }
+          },
+          "test" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "DEVELOPMENT", "PRODUCTION" ]
+          }
+        },
+        "required" : [ "test", "type" ],
+        "default" : [ {
+          "type" : "DEVELOPMENT",
+          "enabled" : true,
+          "properties" : { },
+          "test" : { }
+        } ]
+      }
+    },
+    "name" : {
+      "type" : "string"
+    },
+    "version" : {
+      "type" : [ "string", "null" ]
+    }
+  },
+  "required" : [ "name" ]
+}
