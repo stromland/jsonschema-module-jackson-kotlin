@@ -16,3 +16,7 @@ jobs:
         run: chmod +x gradlew
       - name: Build and test with Gradle
         run: ./gradlew build
+      - name: Publish package
+        run: ./gradlew publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }

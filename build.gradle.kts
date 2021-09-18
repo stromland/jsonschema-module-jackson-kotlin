@@ -86,6 +86,16 @@ publishing {
                     url.set("https://github.com/stromland/jsonschema-module-jackson-kotlin")
                 }
             }
+            repositories {
+                maven {
+                    name = "GitHubPackages"
+                    setUrl("https://maven.pkg.github.com/stromland/jsonschema-module-jackson-kotlin")
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
         }
     }
     repositories {
