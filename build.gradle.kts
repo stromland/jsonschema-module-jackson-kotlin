@@ -8,8 +8,9 @@ plugins {
 }
 
 group = "dev.stromland"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.2-SNAPSHOT"
 description = "A module for JSON schema generator that benefits from Kotlin reflection."
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     jcenter()

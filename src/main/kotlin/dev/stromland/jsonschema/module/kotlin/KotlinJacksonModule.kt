@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.introspect.AnnotatedConstructor
 import com.fasterxml.jackson.databind.introspect.AnnotatedParameter
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.github.victools.jsonschema.generator.FieldScope
 import com.github.victools.jsonschema.generator.SchemaGeneratorConfigBuilder
 import com.github.victools.jsonschema.module.jackson.JacksonModule
@@ -36,7 +37,7 @@ class KotlinJacksonModule(
     override fun applyToConfigBuilder(builder: SchemaGeneratorConfigBuilder) {
         super.applyToConfigBuilder(builder)
         mapper = builder.objectMapper
-            .registerModule(KotlinModule())
+            .registerKotlinModule()
             .enable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES)
 
         builder.forFields().also {
