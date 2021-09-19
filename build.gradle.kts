@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "dev.stromland"
-version = "0.0.2-SNAPSHOT"
+version = "0.0.3-SNAPSHOT"
 description = "A module for JSON schema generator that benefits from Kotlin reflection."
 java.sourceCompatibility = JavaVersion.VERSION_11
 
@@ -39,7 +39,7 @@ tasks {
 
     withType<KotlinCompile>().configureEach {
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = "11"
             javaParameters = true
             freeCompilerArgs = listOf("-Xjsr305=strict")
         }
@@ -62,7 +62,7 @@ val dokkaJar by tasks.creating(Jar::class) {
 publishing {
     publications {
         create<MavenPublication>("default") {
-            from(components["java"])
+            from(components["kotlin"])
             artifact(dokkaJar)
             artifact(sourcesJar)
 

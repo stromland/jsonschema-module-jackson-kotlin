@@ -56,7 +56,9 @@ data class TypeMetadataRegister(private val typeToMetadataMap: Map<Type, TypeMet
 
         if (clazz.isEnum) {
             val value = Class.forName(clazz.name).enumConstants.firstOrNull() ?: return null
-            return clazz.toTypeMetadata(value, mapOf())
+            val typeMetadata = clazz.toTypeMetadata(value, mapOf())
+            defaultTypeValues[clazz] = typeMetadata
+            return typeMetadata
         }
 
         val constructor = clazz.kotlin.primaryConstructor ?: return null
@@ -65,6 +67,7 @@ data class TypeMetadataRegister(private val typeToMetadataMap: Map<Type, TypeMet
             .filter { !it.isOptional }
             .associateWith { getDefaultRequiredValue(it) }
 
+        // TODO: Error handling
         val instant = constructor.callBy(requiredParameters)
         val metadata = clazz.toTypeMetadata(instant, requiredParameters)
         defaultTypeValues[clazz] = metadata

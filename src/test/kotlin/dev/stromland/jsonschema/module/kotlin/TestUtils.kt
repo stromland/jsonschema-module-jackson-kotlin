@@ -34,7 +34,8 @@ data class Snapshot(val path: String = defaultPath) {
     fun getOrCreateSnapshot(name: String, type: String, getContent: () -> String?): String? {
         val file = File("$path/$name.$type")
         val created = file.createNewFile()
-        return if (created) {
+        val shouldUpdate = System.getenv("UPDATE_SNAPSHOT") == "true"
+        return if (created || shouldUpdate) {
             getContent()?.also {
                 file.writeText(it)
                 logger.info("snapshot written (${file.name})")

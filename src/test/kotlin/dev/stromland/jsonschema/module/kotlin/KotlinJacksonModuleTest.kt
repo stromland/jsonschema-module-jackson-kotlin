@@ -36,6 +36,7 @@ class KotlinJacksonModuleTest {
             SchemaGeneratorConfigBuilder(jacksonObjectMapper(), SchemaVersion.DRAFT_2019_09, OptionPreset.PLAIN_JSON)
         builder.with(KotlinJacksonModule(typeMetadataRegister = typeMetadataRegister))
         builder.with(Option.MAP_VALUES_AS_ADDITIONAL_PROPERTIES)
+        builder.with(Option.ENUM_KEYWORD_FOR_SINGLE_VALUES)
         return SchemaGenerator(builder.build())
     }
 }
