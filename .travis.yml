@@ -3,7 +3,7 @@ install: true
 
 os: linux
 dist: bionic
-jdk: openjdk11
+jdk: openjdk17
 
 script:
   - ./gradlew build
