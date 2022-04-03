@@ -2,7 +2,7 @@
 
 A module for the [jsonschema-generator](https://github.com/victools/jsonschema-generator).
 
-This module extends from [jsonschema-module-jackson](https://github.com/victools/jsonschema-module-jackson)
+This module extends from [jsonschema-module-jackson](https://github.com/victools/jsonschema-generator/tree/main/jsonschema-module-jackson)
 
 ## Requirements
 
@@ -24,10 +24,9 @@ Given a [data class](https://kotlinlang.org/docs/reference/data-classes.html#dat
 ```kotlin
 data class Person(val name: String, val lastName: String, val age: Int = 28, val gender: String?)
 
-val builder = SchemaGeneratorConfigBuilder(jacksonObjectMapper(), SchemaVersion.DRAFT_2019_09, OptionPreset.PLAIN_JSON)
+val builder = SchemaGeneratorConfigBuilder(jacksonObjectMapper(), SchemaVersion.DRAFT_2020_12, OptionPreset.PLAIN_JSON)
 
 builder.with(KotlinJacksonModule()) // Add this module
-builder.with(Option.DEFINITIONS_FOR_ALL_OBJECTS)
 
 val generator = SchemaGenerator(builder.build())
 
@@ -36,7 +35,7 @@ val jsonSchema = generator.generateSchema(Person::class.java)
 
 ```json
 {
-  "$schema" : "https://json-schema.org/draft/2019-09/schema",
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
   "properties" : {
     "age" : {

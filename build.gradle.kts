@@ -2,9 +2,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `maven-publish`
-    kotlin("jvm") version "1.5.30"
-    id("org.jetbrains.dokka") version "1.5.30"
-    id("com.github.ben-manes.versions") version "0.38.0"
+    kotlin("jvm") version "1.6.20"
+    id("org.jetbrains.dokka") version "1.6.10"
+    id("com.github.ben-manes.versions") version "0.42.0"
 }
 
 group = "dev.stromland"
@@ -13,20 +13,19 @@ description = "A module for JSON schema generator that benefits from Kotlin refl
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
-    jcenter()
     mavenCentral()
 }
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.5")
-    implementation("com.github.victools:jsonschema-module-jackson:4.20.0")
-    implementation("com.github.victools:jsonschema-generator:4.20.0")
-    runtimeOnly("org.slf4j:slf4j-simple:1.7.32")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.2")
+    implementation("com.github.victools:jsonschema-module-jackson:4.24.1")
+    implementation("com.github.victools:jsonschema-generator:4.24.1")
+    runtimeOnly("org.slf4j:slf4j-simple:1.7.36")
 
-    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.24")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
+    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.25")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
 }
 
 tasks {
