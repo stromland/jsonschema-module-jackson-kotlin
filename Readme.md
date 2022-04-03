@@ -2,7 +2,7 @@
 
 A module for the [jsonschema-generator](https://github.com/victools/jsonschema-generator).
 
-This module extends from [jsonschema-module-jackson](https://github.com/victools/jsonschema-module-jackson)
+This module extends from [jsonschema-module-jackson](https://github.com/victools/jsonschema-generator/tree/main/jsonschema-module-jackson)
 
 ## Requirements
 
